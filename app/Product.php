@@ -22,4 +22,9 @@ class Product extends Model
         return $this->belongsTo('App/User');
     }
 
+    public function suppliers()
+    {
+        return $this->belongsToMany('App\Supplier')->withTimestamps();
+    }
+
 }

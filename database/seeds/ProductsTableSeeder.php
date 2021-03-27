@@ -27,7 +27,7 @@ class ProductsTableSeeder extends Seeder
             JWTAuth::attempt(['email' => $user->email, 'password' => '123123']);
 
             // Y ahora con este usuario creamos algunos articulos
-            $num_products = 20;
+            $num_products = 5;
             for ($j = 0; $j < $num_products; $j++) {
                 Product::create([
                     'name' => $faker->firstName,
