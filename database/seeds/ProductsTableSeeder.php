@@ -2,6 +2,7 @@
 
 use App\Product;
 use Illuminate\Database\Seeder;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -12,9 +13,30 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
+
         // Vaciar la tabla.
         Product::truncate();
         $faker = \Faker\Factory::create();
+
+        // Obtenemos la lista de todos los usuarios creados e
+        // iteramos sobre cada uno y simulamos un inicio de
+        // sesión con cada uno para crear artículos en su nombre
+        $users = App\User::all();
+        foreach ($users as $user) {
+            // iniciamos sesión con este usuario
+            JWTAuth::attempt(['email' => $user->email, 'password' => '123123']);
+
+            // Y ahora con este usuario creamos algunos articulos
+            $num_products = 20;
+            for ($j = 0; $j < $num_products; $j++) {
+                Product::create([
+                    'name' => $faker->firstName,
+                    'code' => $faker->uuid,
+                    'price' => $faker->randomNumber(2),
+                    'status' => 'active',
+                ]);
+            }
+        }
 
         for ($i = 0; $i < 50; $i++) {
             Product::create([
@@ -22,6 +44,7 @@ class ProductsTableSeeder extends Seeder
                 'code' => $faker->uuid,
                 'price' => $faker->randomNumber(2),
                 'status' => 'active',
-            ]); }
+            ]);
+        }
     }
 }
