@@ -16,12 +16,13 @@ use Illuminate\Http\Request;
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 
-Route::get('products', 'ProductController@index'); 
+Route::get('products', 'ProductController@index');
 Route::get('products/{product}', 'ProductController@show');
 
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
+    Route::get('logout', 'UserController@logout');
 
     Route::post('products', 'ProductController@store');
     Route::put('products/{product}', 'ProductController@update');
