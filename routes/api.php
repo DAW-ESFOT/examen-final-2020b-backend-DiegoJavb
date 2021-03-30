@@ -21,6 +21,13 @@ Route::get('products/{product}', 'ProductController@show');
 
 
 Route::group(['middleware' => ['jwt.verify']], function() {
+
+    Route::get('suppliers', 'SupplierController@index');
+    Route::get('suppliers/{supplier}', 'SupplierController@show');
+    Route::put('suppliers/{supplier}', 'SupplierController@update');
+    Route::post('suppliers', 'SupplierController@store');
+    Route::delete('suppliers/{supplier}', 'SupplierController@delete');
+
     Route::get('user', 'UserController@getAuthenticatedUser');
     Route::post('logout', 'UserController@logout');
 
