@@ -21,7 +21,10 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $supplier = Supplier::create($request->all());
+        $validatedData=$request->validate([
+            'name'=>'required|string',
+        ]);
+        $supplier = Supplier::create($validatedData);
         return response()->json($supplier, 201);
     }
 
